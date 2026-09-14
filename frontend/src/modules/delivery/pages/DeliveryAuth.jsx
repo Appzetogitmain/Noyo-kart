@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   Phone,
   ArrowRight,
@@ -873,9 +873,9 @@ const DeliveryAuth = () => {
 
                       <p className="text-center text-xs text-gray-400 font-semibold pt-1">
                         By joining, you agree to our{" "}
-                        <span className="text-indigo-500 font-bold cursor-pointer hover:underline">Terms</span>{" "}
+                        <Link to="/support/delivery" className="text-indigo-500 font-bold hover:underline">Support</Link>{" "}
                         &amp;{" "}
-                        <span className="text-indigo-500 font-bold cursor-pointer hover:underline">Privacy Policy</span>
+                        <Link to="/privacy-policy/delivery" className="text-indigo-500 font-bold hover:underline">Privacy Policy</Link>
                       </p>
                     </div>
                   )}
@@ -981,8 +981,8 @@ const DeliveryAuth = () => {
                     />
                     <label htmlFor="terms" className="text-xs text-gray-500 leading-relaxed cursor-pointer">
                       I confirm my phone number is correct and I agree to the{" "}
-                      <span className="text-indigo-600 font-bold">Terms of Service</span> &amp;{" "}
-                      <span className="text-indigo-600 font-bold">Privacy Policy</span>.
+                      <Link to="/support/delivery" className="text-indigo-600 font-bold hover:underline">Support</Link> &amp;{" "}
+                      <Link to="/privacy-policy/delivery" className="text-indigo-600 font-bold hover:underline">Privacy Policy</Link>.
                     </label>
                   </div>
 

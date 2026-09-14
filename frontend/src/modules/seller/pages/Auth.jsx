@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@core/context/AuthContext";
 import { useSettings } from "@core/context/SettingsContext";
 import { UserRole } from "@core/constants/roles";
@@ -1112,6 +1112,12 @@ const Auth = () => {
                     className="text-slate-900 hover:text-black transition-colors px-2">
                     {isLogin ? "Register Store" : "Sign In"}
                   </button>
+                </p>
+                <p className="text-center text-xs text-slate-400 font-semibold pt-1">
+                  By continuing, you agree to our{" "}
+                  <Link to="/support/seller" className="text-slate-700 font-bold hover:underline">Support</Link>{" "}
+                  &amp;{" "}
+                  <Link to="/privacy-policy/seller" className="text-slate-700 font-bold hover:underline">Privacy Policy</Link>
                 </p>
               </div>
             </motion.div>

@@ -101,6 +101,10 @@ export const adminApi = {
     // Public FAQs (for profile pages, etc.)
     getPublicFAQs: (params) => axiosInstance.get('/public/faqs', { params }),
 
+    // Legal Pages (Privacy Policy / Support content per panel)
+    getLegalPages: () => axiosInstance.get('/legal-pages'),
+    updateLegalPage: (data) => axiosInstance.put('/legal-pages', data),
+
     // Experience Studio / Content Manager
     getExperienceSections: (params) => axiosInstance.get('/admin/experience', { params }),
     createExperienceSection: (data) => axiosInstance.post('/admin/experience', data),

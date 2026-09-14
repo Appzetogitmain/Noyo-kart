@@ -19,6 +19,7 @@ import {
   Terminal,
   User,
   Sparkles,
+  FileText,
 } from "lucide-react";
 import { useSettings } from "@core/context/SettingsContext";
 
@@ -66,6 +67,7 @@ const CustomerDetail = React.lazy(() => import("../pages/CustomerDetail"));
 const UserManagement = React.lazy(() => import("../pages/UserManagement"));
 const Profile = React.lazy(() => import("@/pages/Profile"));
 const FAQManagement = React.lazy(() => import("../pages/FAQManagement"));
+const LegalContentManagement = React.lazy(() => import("../pages/LegalContentManagement"));
 const OrdersList = React.lazy(() => import("../pages/OrdersList"));
 const OrderDetail = React.lazy(() => import("../pages/OrderDetail"));
 const Returns = React.lazy(() => import("../pages/Returns"));
@@ -177,6 +179,12 @@ const defaultNavItems = [
   { label: "Customers", path: "/admin/customers", icon: "Users", color: "sky" },
   { label: "FAQs", path: "/admin/faqs", icon: "HelpCircle", color: "pink" },
   {
+    label: "Privacy & Support",
+    path: "/admin/legal-content",
+    icon: "FileText",
+    color: "sky",
+  },
+  {
     label: "Orders",
     icon: "ClipboardList",
     color: "fuchsia",
@@ -225,6 +233,7 @@ const iconMap = {
   Terminal,
   Sparkles,
   User,
+  FileText,
 };
 
 const BillingCharges = React.lazy(() => import("../pages/BillingCharges"));
@@ -280,6 +289,7 @@ const AdminRoutes = () => {
         <Route path="/customers" element={<CustomerManagement />} />
         <Route path="/customers/:id" element={<CustomerDetail />} />
         <Route path="/faqs" element={<FAQManagement />} />
+        <Route path="/legal-content" element={<LegalContentManagement />} />
         <Route path="/orders/:status" element={<OrdersList />} />
         <Route path="/orders/view/:orderId" element={<OrderDetail />} />
         <Route path="/returns" element={<Returns />} />

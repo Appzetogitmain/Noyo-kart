@@ -25,6 +25,7 @@ import ApplicationPending from '../../modules/seller/pages/ApplicationPending';
 import AdminAuth from '../../modules/admin/pages/AdminAuth';
 import DeliveryAuth from '../../modules/delivery/pages/DeliveryAuth';
 import CustomerAuth from '../../modules/customer/pages/CustomerAuth';
+import LegalContentPage from '../../shared/pages/LegalContentPage';
 
 // Customer Pages (lazy-loaded)
 const Home = lazy(() => import('../../modules/customer/pages/Home'));
@@ -41,7 +42,6 @@ const SettingsPage = lazy(() => import('../../modules/customer/pages/SettingsPag
 const SupportPage = lazy(() => import('../../modules/customer/pages/SupportPage'));
 const ChatPage = lazy(() => import('../../modules/customer/pages/ChatPage'));
 const TermsPage = lazy(() => import('../../modules/customer/pages/TermsPage'));
-const PrivacyPage = lazy(() => import('../../modules/customer/pages/PrivacyPage'));
 const AboutPage = lazy(() => import('../../modules/customer/pages/AboutPage'));
 const EditProfilePage = lazy(() => import('../../modules/customer/pages/EditProfilePage'));
 const OrderDetailPage = lazy(() => import('../../modules/customer/pages/OrderDetailPage'));
@@ -117,6 +117,14 @@ const AppRouter = () => {
                     element: <DeliveryAuth />,
                 },
                 {
+                    path: 'privacy-policy/:panel',
+                    element: <LegalContentPage type="privacy" />,
+                },
+                {
+                    path: 'support/:panel',
+                    element: <LegalContentPage type="support" />,
+                },
+                {
                     path: 'seller/*',
                     element: (
                         <ProtectedRoute>
@@ -170,7 +178,6 @@ const AppRouter = () => {
                         { path: 'category/:categoryName', element: <CategoryProductsPage /> },
                         { path: 'product/:id', element: <ProductDetailPage /> },
                         { path: 'terms', element: <TermsPage /> },
-                        { path: 'privacy', element: <PrivacyPage /> },
                         { path: 'about', element: <AboutPage /> },
                         { path: 'offers', element: <OffersPage /> },
                         { path: 'shop-by-store', element: <ShopByStorePage /> },

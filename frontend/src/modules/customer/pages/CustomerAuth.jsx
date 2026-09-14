@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@core/context/AuthContext';
 import { useSettings } from '@core/context/SettingsContext';
 import {
@@ -366,6 +366,13 @@ const CustomerAuth = () => {
                                             {isLoading ? 'Verifying...' : 'Continue'}
                                             <ChevronRight size={18} />
                                         </button>
+
+                                        <p className="text-center text-xs text-gray-400 font-semibold pt-1">
+                                            By continuing, you agree to our{" "}
+                                            <Link to="/support/customer" className="font-bold hover:underline" style={{ color: activeCategory.theme }}>Support</Link>{" "}
+                                            &amp;{" "}
+                                            <Link to="/privacy-policy/customer" className="font-bold hover:underline" style={{ color: activeCategory.theme }}>Privacy Policy</Link>
+                                        </p>
                                     </form>
                                 </motion.div>
                             ) : (
