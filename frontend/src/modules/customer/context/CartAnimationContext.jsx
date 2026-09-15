@@ -53,7 +53,7 @@ export const CartAnimationProvider = ({ children }) => {
     }, 600);
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   const value = useMemo(() => ({ animateAddToCart, animateRemoveFromCart }), []);
 
   return (

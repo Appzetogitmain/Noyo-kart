@@ -1,4 +1,4 @@
-/* eslint-disable no-restricted-globals */
+ 
 
 self.addEventListener("notificationclick", (event) => {
   const link = event?.notification?.data?.link || "/";

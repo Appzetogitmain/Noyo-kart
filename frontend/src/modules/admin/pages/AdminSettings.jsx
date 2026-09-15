@@ -119,7 +119,10 @@ const AdminSettings = () => {
             const fd = new FormData();
             fd.append('image', file);
             const res = await adminApi.uploadSettingsImage(fd, 'logo');
-            const url = res.data?.result?.url || res.data?.url;
+            let url = res.data?.result?.url || res.data?.url;
+            if (typeof url === 'object') {
+                url = url.secure_url || url.url;
+            }
             if (url) {
                 handleInputChange('logoUrl', url);
                 showToast('Logo uploaded. Click Save Changes to apply.', 'success');
@@ -145,7 +148,10 @@ const AdminSettings = () => {
             const fd = new FormData();
             fd.append('image', file);
             const res = await adminApi.uploadSettingsImage(fd, 'favicon');
-            const url = res.data?.result?.url || res.data?.url;
+            let url = res.data?.result?.url || res.data?.url;
+            if (typeof url === 'object') {
+                url = url.secure_url || url.url;
+            }
             if (url) {
                 handleInputChange('faviconUrl', url);
                 showToast('Favicon uploaded. Click Save Changes to apply.', 'success');
