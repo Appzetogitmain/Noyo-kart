@@ -218,12 +218,12 @@ export const uploadSettingsImage = async (req, res) => {
     }
 
     if (req.file) {
-      const url = await uploadToCloudinary(req.file.buffer, "settings", {
+      const uploadResult = await uploadToCloudinary(req.file.buffer, "settings", {
         mimeType: req.file.mimetype,
         resourceType: "image",
       });
       await invalidate("cache:platform:settings:*");
-      return handleResponse(res, 200, "Image uploaded", { url, type });
+      return handleResponse(res, 200, "Image uploaded", { url: uploadResult.secure_url || uploadResult.url, type });
     }
 
     const providedUrl = String(req.body?.url || req.body?.imageUrl || "").trim();
