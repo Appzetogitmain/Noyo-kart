@@ -126,7 +126,7 @@ const BottomNav = memo(() => {
         background: 'linear-gradient(to top, #FFFFFF 0%, #FAFAFA 100%)',
       }}
     >
-      <div className="flex items-center justify-around px-2 py-2">
+      <div className="flex items-center justify-around px-2 py-2" style={{ paddingBottom: 'calc(0.5rem + env(safe-area-inset-bottom))' }}>
         {navItems.map((item) => {
           const isActive = location.pathname === item.path ||
             (item.path === '/worker/dashboard' && location.pathname === '/worker');

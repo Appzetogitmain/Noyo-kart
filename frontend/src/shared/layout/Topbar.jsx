@@ -91,10 +91,10 @@ const Topbar = ({ onMenuClick }) => {
 
     return (
         <header className={cn(
-            "bg-white/70 backdrop-blur-xl border-b border-gray-100/50 flex items-center justify-between shadow-[0_4px_30px_rgba(0,0,0,0.02)] transition-all duration-300",
+            "bg-white/70 backdrop-blur-xl border-b border-gray-100/50 flex items-center justify-between shadow-[0_4px_30px_rgba(0,0,0,0.02)] transition-all duration-300 pt-[env(safe-area-inset-top)]",
             (role === 'admin' || role === 'seller')
-                ? "fixed top-0 left-0 right-0 z-50 h-14 px-4 md:static md:h-16 md:px-6"
-                : "fixed top-0 left-56 right-0 h-16 px-6 z-40"
+                ? "fixed top-0 left-0 right-0 z-50 h-auto min-h-[56px] px-4 md:static md:min-h-[64px] md:px-6"
+                : "fixed top-0 left-56 right-0 min-h-[64px] px-6 z-40"
         )}>
             <div className="flex items-center flex-1 mr-4 overflow-hidden">
                 <button

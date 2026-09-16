@@ -86,7 +86,7 @@ const Header = ({
 
   return (
     <header
-      className="sticky top-0 z-40 w-full bg-white"
+      className="sticky top-0 z-40 w-full bg-white pt-[env(safe-area-inset-top)]"
       style={{
         borderBottom: '2px solid rgba(156, 163, 175, 0.3)',
         borderBottomLeftRadius: '20px',

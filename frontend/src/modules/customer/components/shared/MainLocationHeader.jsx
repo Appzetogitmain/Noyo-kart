@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionTemplate } from "framer-motion";
 import Lottie from "lottie-react";
 import LocationDrawer from "./LocationDrawer";
 import { useLocation } from "../../context/LocationContext";
@@ -298,6 +298,8 @@ const MainLocationHeader = ({
     };
   }, [baseHeaderColor]);
 
+  const combinedTopPadding = useMotionTemplate`calc(env(safe-area-inset-top) + ${headerTopPadding}px)`;
+
   return (
     <>
       <div
@@ -308,7 +310,7 @@ const MainLocationHeader = ({
         <motion.div
           initial={false}
           style={{
-            paddingTop: headerTopPadding,
+            paddingTop: combinedTopPadding,
             paddingBottom: headerBottomPadding,
             borderBottomLeftRadius: headerRoundness,
             borderBottomRightRadius: headerRoundness,

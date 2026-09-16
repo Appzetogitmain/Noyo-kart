@@ -401,22 +401,57 @@ const CustomerAuth = () => {
                                                 <input
                                                     key={i}
                                                     type="tel"
-                                                    maxLength={1}
+                                                    maxLength={4}
+                                                    autoComplete={i === 0 ? "one-time-code" : "off"}
+                                                    value={formData.otp[i] || ''}
                                                     className="w-14 h-16 bg-white border-2 border-gray-200 rounded-3xl text-center text-2xl font-black outline-none shadow-[0_18px_45px_rgba(15,23,42,0.35)] focus:bg-white focus:border-[var(--theme-color)] focus:shadow-[0_24px_65px_rgba(15,23,42,0.55)] transition-all"
                                                     style={{ color: activeCategory.theme }}
                                                     onKeyDown={(e) => {
-                                                        if (e.key === 'Backspace' && !e.target.value && i > 0) {
-                                                            e.target.previousElementSibling.focus();
+                                                        if (e.key === 'Backspace' && !formData.otp[i] && i > 0) {
+                                                            e.target.previousElementSibling?.focus();
                                                         }
                                                     }}
                                                     onChange={(e) => {
-                                                        const val = e.target.value;
-                                                        if (val && i < 3) (e.target.nextElementSibling).focus();
+                                                        const val = e.target.value.replace(/\D/g, '');
+                                                        if (!val) {
+                                                            const otpArr = formData.otp.split('');
+                                                            otpArr[i] = '';
+                                                            setFormData({ ...formData, otp: otpArr.join('') });
+                                                            return;
+                                                        }
+
+                                                        // Handle paste or iOS Auto-fill (multiple digits)
+                                                        if (val.length > 1) {
+                                                            const pasted = val.slice(0, 4).split('');
+                                                            const newOtp = formData.otp.split('');
+                                                            pasted.forEach((char, idx) => {
+                                                                if (i + idx < 4) newOtp[i + idx] = char;
+                                                            });
+                                                            setFormData({ ...formData, otp: newOtp.join('') });
+                                                            
+                                                            setTimeout(() => {
+                                                                const inputs = e.target.parentElement.querySelectorAll('input');
+                                                                const nextIndex = Math.min(i + pasted.length, 3);
+                                                                if (inputs[nextIndex]) inputs[nextIndex].focus();
+                                                            }, 10);
+                                                            return;
+                                                        }
+
+                                                        // Single character entry
                                                         const otpArr = formData.otp.split('');
                                                         otpArr[i] = val;
                                                         setFormData({ ...formData, otp: otpArr.join('') });
+                                                        
+                                                        if (val && i < 3) {
+                                                            setTimeout(() => {
+                                                                e.target.nextElementSibling?.focus();
+                                                            }, 10);
+                                                        }
                                                     }}
-                                                    onFocus={(e) => e.target.style.borderColor = activeCategory.theme}
+                                                    onFocus={(e) => {
+                                                        e.target.style.borderColor = activeCategory.theme;
+                                                        e.target.select();
+                                                    }}
                                                     onBlur={(e) => e.target.style.borderColor = ''}
                                                 />
                                             ))}
