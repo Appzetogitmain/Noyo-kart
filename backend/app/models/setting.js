@@ -19,6 +19,10 @@ const settingSchema = new mongoose.Schema(
             type: String,
             default: "",
         },
+        supportHours: {
+            type: String,
+            default: "Mon-Sat: 9 AM - 7 PM",
+        },
         currencySymbol: {
             type: String,
             default: "₹",
