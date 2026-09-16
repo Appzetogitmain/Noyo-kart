@@ -19,7 +19,8 @@ import {
     Linkedin,
     Youtube,
     Loader2,
-    X
+    X,
+    Clock
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@shared/components/ui/Toast';
@@ -39,6 +40,7 @@ const AdminSettings = () => {
         appName: '',
         supportEmail: '',
         supportPhone: '',
+        supportHours: '',
         currencySymbol: '₹',
         currencyCode: 'INR',
         timezone: 'Asia/Kolkata',
@@ -275,6 +277,19 @@ const AdminSettings = () => {
                                             value={settings.supportPhone}
                                             onChange={(e) => handleInputChange('supportPhone', e.target.value)}
                                             className="w-full pl-12 pr-5 py-4 bg-slate-50 border-none rounded-2xl text-sm font-bold text-slate-900 outline-none focus:ring-2 focus:ring-brand-500/10 transition-all"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="space-y-3">
+                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Support Hours</label>
+                                    <div className="relative group">
+                                        <Clock className="absolute left-5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                                        <input
+                                            type="text"
+                                            value={settings.supportHours}
+                                            onChange={(e) => handleInputChange('supportHours', e.target.value)}
+                                            className="w-full pl-12 pr-5 py-4 bg-slate-50 border-none rounded-2xl text-sm font-bold text-slate-900 outline-none focus:ring-2 focus:ring-brand-500/10 transition-all"
+                                            placeholder="Mon-Sat: 9 AM - 7 PM"
                                         />
                                     </div>
                                 </div>

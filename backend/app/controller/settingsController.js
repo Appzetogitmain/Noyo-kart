@@ -9,6 +9,7 @@ const ALLOWED_KEYS = [
   "appName",
   "supportEmail",
   "supportPhone",
+  "supportHours",
   "currencySymbol",
   "currencyCode",
   "timezone",
@@ -59,6 +60,7 @@ const updateSettingsSchema = Joi.object({
   appName: Joi.string().allow("").max(200),
   supportEmail: Joi.string().email().allow("").max(200),
   supportPhone: Joi.string().allow("").max(50),
+  supportHours: Joi.string().allow("").max(200),
   currencySymbol: Joi.string().allow("").max(10),
   currencyCode: Joi.string().allow("").max(10),
   timezone: Joi.string().allow("").max(100),
@@ -136,7 +138,7 @@ export const getPublicSettings = async (req, res) => {
       async () => {
         const existing = await Setting.findOne(filter)
           .select(
-            "appName supportEmail supportPhone currencySymbol currencyCode timezone logoUrl faviconUrl primaryColor secondaryColor returnDeliveryCommission deliveryPricingMode pricingMode customerBaseDeliveryFee riderBasePayout baseDeliveryCharge baseDistanceCapacityKm incrementalKmSurcharge deliveryPartnerRatePerKm fleetCommissionRatePerKm fixedDeliveryFee handlingFeeStrategy codEnabled onlineEnabled customerBottomNav customerHeaderNav deliveryBottomNav sellerSidebar adminSidebar aboutUsData privacyPolicyText termsText createdAt",
+            "appName supportEmail supportPhone supportHours currencySymbol currencyCode timezone logoUrl faviconUrl primaryColor secondaryColor returnDeliveryCommission deliveryPricingMode pricingMode customerBaseDeliveryFee riderBasePayout baseDeliveryCharge baseDistanceCapacityKm incrementalKmSurcharge deliveryPartnerRatePerKm fleetCommissionRatePerKm fixedDeliveryFee handlingFeeStrategy codEnabled onlineEnabled customerBottomNav customerHeaderNav deliveryBottomNav sellerSidebar adminSidebar aboutUsData privacyPolicyText termsText createdAt",
           )
           .lean();
         return existing || null;

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { ChevronLeft, ShieldCheck, LifeBuoy } from 'lucide-react';
+import { ChevronLeft, ShieldCheck, LifeBuoy, Mail } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '@core/api/axios';
+import { useSettings } from '@core/context/SettingsContext';
 
 const VALID_PANELS = ['customer', 'seller', 'delivery'];
 
@@ -11,6 +12,7 @@ const TYPE_META = {
 };
 
 const LegalContentPage = ({ type }) => {
+    const { settings } = useSettings();
     const navigate = useNavigate();
     const { panel: panelParam } = useParams();
     const panel = VALID_PANELS.includes(panelParam) ? panelParam : 'customer';
@@ -76,6 +78,31 @@ const LegalContentPage = ({ type }) => {
                     ) : (
                         <p className="text-slate-400 text-sm font-semibold">Content coming soon.</p>
                     )}
+                </div>
+
+                {/* Support Contact Card */}
+                <div className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 mt-6">
+                    <div className="flex items-center gap-3 mb-6">
+                        <div className="text-orange-500">
+                            <Mail size={28} className="stroke-2" />
+                        </div>
+                        <h2 className="text-xl font-bold text-slate-800 tracking-tight">WARRANTY SUPPORT</h2>
+                    </div>
+
+                    <div className="space-y-6">
+                        <div>
+                            <p className="text-slate-500 font-bold mb-1 text-sm">Email</p>
+                            <p className="text-slate-800 text-[15px] font-medium">{settings?.supportEmail || 'support@appzeto.com'}</p>
+                        </div>
+                        <div>
+                            <p className="text-slate-500 font-bold mb-1 text-sm">Phone</p>
+                            <p className="text-slate-800 text-[15px] font-medium">{settings?.supportPhone || '+91 9870162128'}</p>
+                        </div>
+                        <div>
+                            <p className="text-slate-500 font-bold mb-1 text-sm">Hours</p>
+                            <p className="text-slate-800 text-[15px] font-medium">{settings?.supportHours || 'Mon-Sat: 9 AM - 7 PM'}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
