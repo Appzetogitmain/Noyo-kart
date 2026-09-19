@@ -259,7 +259,7 @@ const AdminDashboard = () => {
                         className="border-none shadow-sm ring-1 ring-gray-100 h-full"
                     >
                         <div className="overflow-x-auto">
-                            <table className="w-full">
+                            <table className="w-full min-w-[1000px]">
                                 <thead>
                                     <tr className="text-left border-b border-gray-100">
                                         <th className="admin-table-header">Order ID</th>

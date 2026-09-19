@@ -403,7 +403,7 @@ const DashboardLayout = ({ children, navItems, title }) => {
                 )}
             </AnimatePresence>
 
-            {role === "admin" && <BottomNav navItems={navItems} />}
+            {(role === "admin" || role === "seller") && <BottomNav navItems={navItems} />}
         </div>
     );
 };

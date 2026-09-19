@@ -138,7 +138,7 @@ export const getPublicSettings = async (req, res) => {
       async () => {
         const existing = await Setting.findOne(filter)
           .select(
-            "appName supportEmail supportPhone supportHours currencySymbol currencyCode timezone logoUrl faviconUrl primaryColor secondaryColor returnDeliveryCommission deliveryPricingMode pricingMode customerBaseDeliveryFee riderBasePayout baseDeliveryCharge baseDistanceCapacityKm incrementalKmSurcharge deliveryPartnerRatePerKm fleetCommissionRatePerKm fixedDeliveryFee handlingFeeStrategy codEnabled onlineEnabled customerBottomNav customerHeaderNav deliveryBottomNav sellerSidebar adminSidebar aboutUsData privacyPolicyText termsText createdAt",
+            "appName supportEmail supportPhone supportHours currencySymbol currencyCode timezone logoUrl faviconUrl primaryColor secondaryColor companyName taxId address facebook twitter instagram linkedin youtube playStoreLink appStoreLink metaTitle metaDescription metaKeywords keywords returnDeliveryCommission deliveryPricingMode pricingMode customerBaseDeliveryFee riderBasePayout baseDeliveryCharge baseDistanceCapacityKm incrementalKmSurcharge deliveryPartnerRatePerKm fleetCommissionRatePerKm fixedDeliveryFee handlingFeeStrategy codEnabled onlineEnabled customerBottomNav customerHeaderNav deliveryBottomNav sellerSidebar adminSidebar aboutUsData privacyPolicyText termsText createdAt",
           )
           .lean();
         return existing || null;

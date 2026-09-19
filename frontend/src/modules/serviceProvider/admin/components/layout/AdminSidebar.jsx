@@ -146,7 +146,7 @@ const AdminSidebar = ({ isOpen, onClose }) => {
     { title: 'Dashboard', route: '/sp/admin/dashboard', allowedRoles: ['super_admin', 'admin'], children: [] },
     { title: 'Users', route: '/sp/admin/users', allowedRoles: ['super_admin', 'admin'], children: ['All Users', 'User Bookings', 'User Analytics'] },
     { title: 'Vendors', route: '/sp/admin/vendors', allowedRoles: ['super_admin', 'admin'], children: ['All Vendors', 'Vendor Bookings', 'Vendor Analytics'] },
-    { title: 'Workers', route: '/sp/admin/workers', allowedRoles: ['super_admin', 'admin'], children: ['All Workers', 'Worker Jobs', 'Worker Analytics'] },
+    // { title: 'Workers', route: '/sp/admin/workers', allowedRoles: ['super_admin', 'admin'], children: ['All Workers', 'Worker Jobs', 'Worker Analytics'] },
     { title: 'Bookings', route: '/sp/admin/bookings', allowedRoles: ['super_admin', 'admin'], children: ['All Bookings', 'Booking Tracking', 'Booking Notifications'] },
     { title: 'Scrap Items', route: '/sp/admin/scrap', allowedRoles: ['super_admin', 'admin'], children: [] },
     { title: 'Payments', route: '/sp/admin/payments', allowedRoles: ['super_admin'], children: ['Payment Overview', 'User Payments', 'Worker Payments', 'Vendor Payments', 'Admin Revenue', 'Payment Reports'] },
@@ -178,6 +178,7 @@ const AdminSidebar = ({ isOpen, onClose }) => {
 
   // Filter menu items by role
   const filteredMenu = useMemo(() => dynamicMenu.filter(item => {
+    if (item.title === 'Workers') return false;
     if (!item.allowedRoles || item.allowedRoles.length === 0) return true;
     return item.allowedRoles.includes(adminUser.role);
   }), [adminUser.role, dynamicMenu]);

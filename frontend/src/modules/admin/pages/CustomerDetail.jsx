@@ -339,7 +339,7 @@ const CustomerDetail = () => {
                             </div>
                         </div>
                         <div className="overflow-x-auto">
-                            <table className="w-full text-left">
+                            <table className="w-full text-left min-w-[1000px]">
                                 <tbody className="divide-y divide-slate-50">
                                     {filteredOrders.map((order, i) => (
                                         <tr

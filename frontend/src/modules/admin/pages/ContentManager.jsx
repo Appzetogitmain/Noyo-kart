@@ -672,12 +672,19 @@ const ContentManager = () => {
                                                         <option value="product">Product</option>
                                                         <option value="url">External URL</option>
                                                     </select>
-                                                    <input
-                                                        value={item.linkValue || ''}
-                                                        onChange={(e) => updateBannerItem(idx, { linkValue: e.target.value })}
-                                                        className="w-full p-2.5 bg-slate-50 rounded-xl text-xs font-bold border-none outline-none"
-                                                        placeholder={item.linkType === 'url' ? "https://..." : "Slug / ID"}
-                                                    />
+                                                    <div>
+                                                        <input
+                                                            value={item.linkValue || ''}
+                                                            onChange={(e) => updateBannerItem(idx, { linkValue: e.target.value })}
+                                                            className="w-full p-2.5 bg-slate-50 rounded-xl text-xs font-bold border-none outline-none"
+                                                            placeholder={item.linkType === 'url' ? "https://..." : "Slug / ID"}
+                                                        />
+                                                        {item.linkType && item.linkType !== 'none' && item.linkType !== 'url' && item.linkType !== 'sp' && (
+                                                            <p className="text-[9px] text-slate-400 mt-1 pl-1">
+                                                                Tip: Copy the ID from the <strong>{item.linkType === 'product' ? 'Products' : 'Categories'}</strong> page and paste it here.
+                                                            </p>
+                                                        )}
+                                                    </div>
                                                 </div>
                                             </div>
                                             {formData.bannerItems.length > 1 && (

@@ -14,6 +14,7 @@ import {
   roleFromRecipientModel,
 } from "./notification.constants.js";
 import { notify } from "./notification.service.js";
+import { sendFCM } from "./firebase.service.js";
 import { emitNotificationEvent } from "./notification.emitter.js";
 import { NOTIFICATION_EVENTS } from "./notification.constants.js";
 
@@ -409,6 +410,56 @@ export const getTestPushNotificationStatus = async (req, res) => {
   }
 };
 
+export const broadcastNotification = async (req, res) => {
+  try {
+    const role = resolveRole(req);
+    // Ensure only admins can broadcast
+    if (role !== "admin") {
+      return handleResponse(res, 403, "Forbidden: Only admins can broadcast notifications.");
+    }
+
+    const { title, message, segment, deepLink, imageUrl } = req.body;
+
+    if (!title || !message) {
+      return handleResponse(res, 400, "Title and message are required.");
+    }
+
+    // Determine target users based on segment
+    // For simplicity, if segment === 'all', send to all ACTIVE customer tokens.
+    // If you have specific criteria for 'lapsed', 'power', 'new', apply them to find user IDs.
+    // Right now, let's fetch all customer tokens as a baseline, or customize per segment if needed.
+    
+    // As a generic implementation: fetch active tokens for customers
+    const tokensDoc = await PushToken.find({ isActive: true, role: "customer" }).select("token").lean();
+    const tokens = tokensDoc.map(doc => doc.token);
+
+    if (!tokens.length) {
+      return handleResponse(res, 200, "No active users found to broadcast to.");
+    }
+
+    const payload = {
+      title,
+      body: message,
+      data: {
+        link: deepLink || "",
+        imageUrl: imageUrl || "",
+        eventType: "ADMIN_BROADCAST"
+      }
+    };
+
+    const result = await sendFCM(tokens, payload);
+
+    return handleResponse(res, 200, "Broadcast triggered successfully", {
+      targeted: tokens.length,
+      successCount: result.successCount,
+      failureCount: result.failureCount
+    });
+
+  } catch (error) {
+    return handleResponse(res, 500, error.message);
+  }
+};
+
 export default {
   registerPushToken,
   removePushToken,
@@ -418,4 +469,5 @@ export default {
   updateNotificationPreferences,
   testPushNotification,
   getTestPushNotificationStatus,
+  broadcastNotification,
 };

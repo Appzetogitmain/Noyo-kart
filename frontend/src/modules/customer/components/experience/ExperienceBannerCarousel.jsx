@@ -63,7 +63,7 @@ const ExperienceBannerCarousel = ({ section, items, fullWidth = false, slideGap 
                 navigate('/sp/user');
               } else if (banner.linkType === 'url' && banner.linkValue) {
                 window.open(banner.linkValue, '_blank');
-              } else if (banner.linkType === 'category' && banner.linkValue) {
+              } else if (['header', 'category', 'subcategory'].includes(banner.linkType) && banner.linkValue) {
                 navigate(`/category/${banner.linkValue}`);
               } else if (banner.linkType === 'product' && banner.linkValue) {
                 navigate(`/product/${banner.linkValue}`);

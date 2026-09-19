@@ -257,7 +257,7 @@ const CouponManagement = () => {
 
                 {/* Coupons Table */}
                 <div className="overflow-x-auto">
-                    <table className="w-full text-left">
+                    <table className="w-full text-left min-w-[1000px]">
                         <thead>
                             <tr className="bg-slate-50/50 border-b border-slate-50">
                                 <th className="px-4 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Coupon Code</th>

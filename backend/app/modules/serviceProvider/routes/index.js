@@ -130,13 +130,13 @@ router.use('/vendors/catalog', vendorCatalogRoutes);
 // ==========================================
 // WORKER ROUTES
 // ==========================================
-router.use('/workers/auth', workerAuthRoutes);
-router.use('/workers', workerProfileRoutes);
-router.use('/workers/jobs', workerJobRoutes);
-router.use('/workers/dashboard', workerDashboardRoutes);
-router.use('/workers/stats', workerDashboardRoutes); // alias — frontend expects /workers/stats
-router.use('/workers/wallet', workerWalletRoutes);
-router.use('/workers/fcm-tokens', workerFcmTokenRoutes);
+// router.use('/workers/auth', workerAuthRoutes);
+// router.use('/workers', workerProfileRoutes);
+// router.use('/workers/jobs', workerJobRoutes);
+// router.use('/workers/dashboard', workerDashboardRoutes);
+// router.use('/workers/stats', workerDashboardRoutes); // alias — frontend expects /workers/stats
+// router.use('/workers/wallet', workerWalletRoutes);
+// router.use('/workers/fcm-tokens', workerFcmTokenRoutes);
 
 // ==========================================
 // ADMIN ROUTES
@@ -145,7 +145,7 @@ router.use('/admin/auth', adminAuthRoutes);
 router.use('/admin/dashboard', adminDashboardRoutes);
 router.use('/admin/users', adminUsersRoutes);
 router.use('/admin/vendors', adminVendorsRoutes);
-router.use('/admin/workers', adminWorkersRoutes);
+// router.use('/admin/workers', adminWorkersRoutes);
 router.use('/admin/categories', adminCategoriesRoutes);
 router.use('/admin/brands', adminBrandsRoutes);
 router.use('/admin/services', adminServicesRoutes);

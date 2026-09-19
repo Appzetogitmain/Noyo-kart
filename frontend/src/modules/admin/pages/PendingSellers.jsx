@@ -190,7 +190,7 @@ const PendingSellers = () => {
                 </div>
 
                 <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse">
+                    <table className="w-full text-left border-collapse min-w-[1000px]">
                         <thead>
                             <tr className="bg-slate-50/50 border-b border-slate-100">
                                 <th className="ds-table-header-cell px-6">Applicant Store</th>

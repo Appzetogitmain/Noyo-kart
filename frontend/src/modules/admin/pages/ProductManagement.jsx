@@ -344,7 +344,7 @@ const ProductManagement = () => {
                             className="w-full pl-10 pr-4 py-2.5 bg-slate-100/50 border-none rounded-xl text-xs font-semibold text-slate-700 placeholder:text-slate-400 focus:ring-2 focus:ring-primary/5 transition-all outline-none"
                         />
                     </div>
-                    <div className="flex gap-2 shrink-0 w-full lg:w-auto">
+                    <div className="flex flex-wrap sm:flex-nowrap gap-2 shrink-0 w-full lg:w-auto">
                         <select
                             value={filterCategory}
                             onChange={(e) => setFilterCategory(e.target.value)}
@@ -400,7 +400,7 @@ const ProductManagement = () => {
             {/* Product Table */}
             <Card className="border-none shadow-xl ring-1 ring-slate-100 overflow-hidden rounded-xl">
                 <div className="overflow-x-auto">
-                    <table className="w-full table-fixed text-left border-collapse">
+                    <table className="w-full table-fixed text-left border-collapse min-w-[1000px]">
                         <colgroup>
                             <col className="w-[28%]" />
                             <col className="w-[14%]" />
@@ -996,7 +996,7 @@ const ProductManagement = () => {
                     </div>
 
                     <div className="overflow-hidden rounded-2xl border border-slate-100 shadow-sm bg-white">
-                        <table className="w-full text-left">
+                        <table className="w-full text-left min-w-[1000px]">
                             <thead>
                                 <tr className="bg-slate-50/50 border-b border-slate-100">
                                     <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Variant Specification</th>

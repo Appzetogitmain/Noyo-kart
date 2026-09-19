@@ -136,4 +136,7 @@ export const adminApi = {
     createCoupon: (data) => axiosInstance.post('/admin/coupons', data),
     updateCoupon: (id, data) => axiosInstance.put(`/admin/coupons/${id}`, data),
     deleteCoupon: (id) => axiosInstance.delete(`/admin/coupons/${id}`),
+
+    // Notifications
+    broadcastNotification: (data) => axiosInstance.post('/push/broadcast', data),
 };

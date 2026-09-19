@@ -47,7 +47,7 @@ const UserManagement = () => {
 
             <Card>
                 <div className="overflow-x-auto">
-                    <table className="w-full text-left">
+                    <table className="w-full text-left min-w-[1000px]">
                         <thead className="bg-gray-50 border-b">
                             <tr>
                                 <th className="ds-table-header-cell">User</th>

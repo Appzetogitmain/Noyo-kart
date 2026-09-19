@@ -34,19 +34,7 @@
       "Vendor Analytics"
     ]
   },
-  {
-    "title": "Workers",
-    "route": "/sp/admin/workers",
-    "allowedRoles": [
-      "super_admin",
-      "admin"
-    ],
-    "children": [
-      "All Workers",
-      "Worker Jobs",
-      "Worker Analytics"
-    ]
-  },
+
   {
     "title": "Bookings",
     "route": "/sp/admin/bookings",

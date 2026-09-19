@@ -33,7 +33,7 @@ const SPRoutes = () => {
         <Route path="/vendor/*" element={<VendorRoutes />} />
 
         {/* Worker Routes */}
-        <Route path="/worker/*" element={<WorkerRoutes />} />
+        {/* <Route path="/worker/*" element={<WorkerRoutes />} /> */}
 
         {/* Admin Routes */}
         <Route path="/admin/*" element={<AdminRoutes />} />

@@ -44,7 +44,7 @@ const AdminRoutes = () => {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="users/*" element={<Users />} />
           <Route path="vendors/*" element={<Vendors />} />
-          <Route path="workers/*" element={<Workers />} />
+          {/* <Route path="workers/*" element={<Workers />} /> */}
           <Route path="bookings" element={<Bookings />} />
           <Route path="bookings/tracking" element={<BookingTracking />} />
           <Route path="bookings/notifications" element={<BookingNotifications />} />

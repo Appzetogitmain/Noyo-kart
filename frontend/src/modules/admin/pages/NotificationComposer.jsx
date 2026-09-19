@@ -3,6 +3,7 @@ import Card from '@shared/components/ui/Card';
 import Badge from '@shared/components/ui/Badge';
 import PageHeader from '@shared/components/ui/PageHeader';
 import { useToast } from '@shared/components/ui/Toast';
+import { adminApi } from '@/modules/admin/services/adminApi';
 import {
     HiOutlinePaperAirplane,
     HiOutlineBars3BottomLeft,
@@ -16,7 +17,8 @@ import {
     HiOutlineBolt,
     HiOutlineExclamationCircle,
     HiOutlineCheckCircle,
-    HiOutlineChartBar
+    HiOutlineChartBar,
+    HiArrowPath
 } from 'react-icons/hi2';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
@@ -31,8 +33,7 @@ const NotificationComposer = () => {
     const [selectedSegment, setSelectedSegment] = useState('all');
     const [deepLink, setDeepLink] = useState('');
     const [imageUrl, setImageUrl] = useState('');
-    const [location, setLocation] = useState('all');
-    const [lastOrder, setLastOrder] = useState('any');
+    const [isLoading, setIsLoading] = useState(false);
 
     const segments = [
         { id: 'all', label: 'All Users', count: '12,504', description: 'Universal Reach', icon: HiOutlineUsers, color: 'blue' },
@@ -41,17 +42,34 @@ const NotificationComposer = () => {
         { id: 'new', label: 'Recent Signups', count: '1,420', description: 'Last 7 days', icon: HiOutlineCheckCircle, color: 'emerald' },
     ];
 
-    const handleSend = () => {
+    const handleSend = async () => {
         if (!title || !message) {
             showToast('Please complete the notification broadcast fields', 'warning');
             return;
         }
-        showToast(`Broadcasting to ${segments.find(s => s.id === selectedSegment)?.count} users...`, 'info');
-        setTimeout(() => {
-            showToast('Campaign launched successfully!', 'success');
-            setTitle('');
-            setMessage('');
-        }, 1500);
+        setIsLoading(true);
+        try {
+            const res = await adminApi.broadcastNotification({
+                title,
+                message,
+                segment: selectedSegment,
+                deepLink,
+                imageUrl
+            });
+            if (res?.data?.success) {
+                showToast(`Broadcast sent to ${res.data.result.targeted} users!`, 'success');
+                setTitle('');
+                setMessage('');
+                setDeepLink('');
+                setImageUrl('');
+            } else {
+                showToast(res?.data?.message || 'Failed to send broadcast', 'error');
+            }
+        } catch (error) {
+            showToast(error?.response?.data?.message || 'Error triggering broadcast', 'error');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -127,27 +145,21 @@ const NotificationComposer = () => {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div className="space-y-2">
                                         <label className="ds-label">Deep Link (Optional)</label>
-                                        <div className="relative">
-                                            <HiOutlineLink className="absolute left-3 top-1/2 -translate-y-1/2 ds-icon-sm text-slate-400" />
-                                            <input
-                                                value={deepLink}
-                                                onChange={(e) => setDeepLink(e.target.value)}
-                                                className="ds-input w-full pl-9"
-                                                placeholder="/deals/category"
-                                            />
-                                        </div>
+                                        <input
+                                            value={deepLink}
+                                            onChange={(e) => setDeepLink(e.target.value)}
+                                            className="ds-input w-full"
+                                            placeholder="/deals/category"
+                                        />
                                     </div>
                                     <div className="space-y-2">
                                         <label className="ds-label">Image URL (Optional)</label>
-                                        <div className="relative">
-                                            <HiOutlinePhoto className="absolute left-3 top-1/2 -translate-y-1/2 ds-icon-sm text-slate-400" />
-                                            <input
-                                                value={imageUrl}
-                                                onChange={(e) => setImageUrl(e.target.value)}
-                                                className="ds-input w-full pl-9"
-                                                placeholder="https://..."
-                                            />
-                                        </div>
+                                        <input
+                                            value={imageUrl}
+                                            onChange={(e) => setImageUrl(e.target.value)}
+                                            className="ds-input w-full"
+                                            placeholder="https://..."
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -155,11 +167,20 @@ const NotificationComposer = () => {
                             {/* Send Button */}
                             <button
                                 onClick={handleSend}
-                                disabled={!title || !message}
+                                disabled={!title || !message || isLoading}
                                 className="ds-btn ds-btn-lg w-full bg-slate-900 text-white hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                             >
-                                <HiOutlineBolt className="ds-icon-md text-amber-400" />
-                                BLAST SIGNAL
+                                {isLoading ? (
+                                    <>
+                                        <HiArrowPath className="ds-icon-md text-amber-400 animate-spin" />
+                                        SENDING...
+                                    </>
+                                ) : (
+                                    <>
+                                        <HiOutlineBolt className="ds-icon-md text-amber-400" />
+                                        BLAST SIGNAL
+                                    </>
+                                )}
                             </button>
                         </div>
                     </Card>

@@ -283,7 +283,7 @@ const MainLocationHeader = ({
     value > 150 ? "none" : "block",
   );
 
-  const baseHeaderColor = "#0284c7"; // Always use Quick commerce blue
+  const baseHeaderColor = activeCategory?.headerColor || "#0284c7"; // Use active category color or default to Quick commerce blue
   const headerGradient = buildHeaderGradient(baseHeaderColor);
   const searchBarBg = buildSearchBarBackgroundColor(baseHeaderColor);
   const categoryAccent = "#111111";
@@ -533,7 +533,7 @@ const MainLocationHeader = ({
                 overflowY: "hidden",
               }}
               className="relative flex items-end md:justify-center gap-0 overflow-x-auto no-scrollbar -mx-2 px-2 md:mx-0 md:px-0 z-10 snap-x pt-1 min-h-[68px] md:min-h-[76px] pb-0.5">
-              {categories.slice(0, 10).map((cat) => {
+              {categories.map((cat) => {
                 const isActive = activeCategory?.id === cat.id;
                 return (
                   <CategoryNavColumn

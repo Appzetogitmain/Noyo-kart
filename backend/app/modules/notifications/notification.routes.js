@@ -9,6 +9,7 @@ import {
   updateNotificationPreferences,
   testPushNotification,
   getTestPushNotificationStatus,
+  broadcastNotification,
 } from "./notification.controller.js";
 
 const notificationRouter = express.Router();
@@ -31,6 +32,7 @@ pushRouter.post("/test", testPushNotification);
 pushRouter.get("/test-status/:orderId", getTestPushNotificationStatus);
 pushRouter.get("/preferences", getNotificationPreferences);
 pushRouter.patch("/preferences", updateNotificationPreferences);
+pushRouter.post("/broadcast", broadcastNotification);
 
 export { notificationRouter, pushRouter };
 export default notificationRouter;

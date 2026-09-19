@@ -213,7 +213,7 @@ const CustomerManagement = () => {
                 )}
 
                 <div className="overflow-x-auto">
-                    <table className="ds-table">
+                    <table className="ds-table min-w-[1000px]">
                         <thead className="ds-table-header">
                             <tr>
                                 <th className="ds-table-header-cell">Customer</th>

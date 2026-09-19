@@ -74,6 +74,7 @@ const AdminSettings = () => {
                     setSettings(prev => ({
                         ...prev,
                         ...data,
+                        metaKeywords: data.metaKeywords || (Array.isArray(data.keywords) ? data.keywords.join(', ') : ''),
                         keywords: Array.isArray(data.keywords) ? data.keywords : (data.metaKeywords ? data.metaKeywords.split(',').map(k => k.trim()).filter(Boolean) : []),
                         returnDeliveryCommission: data.returnDeliveryCommission ?? 0,
                     }));
@@ -93,7 +94,7 @@ const AdminSettings = () => {
             setIsSaving(true);
             const payload = {
                 ...settings,
-                keywords: Array.isArray(settings.keywords) ? settings.keywords : (settings.metaKeywords ? settings.metaKeywords.split(',').map(k => k.trim()).filter(Boolean) : []),
+                keywords: settings.metaKeywords ? settings.metaKeywords.split(',').map(k => k.trim()).filter(Boolean) : [],
             };
             await adminApi.updateSettings(payload);
             showToast('Settings updated successfully', 'success');
@@ -597,7 +598,7 @@ const AdminSettings = () => {
                                         value={settings.metaKeywords}
                                         onChange={(e) => handleInputChange('metaKeywords', e.target.value)}
                                         className="w-full px-5 py-4 bg-slate-50 border-none rounded-2xl text-sm font-bold text-slate-900 outline-none focus:ring-2 focus:ring-brand-500/10 transition-all"
-                                        placeholder="keyword1, keyword2, keyword3"
+                                        placeholder="e.g. ecommerce, local, fast delivery"
                                     />
                                     <p className="text-[10px] font-bold text-slate-400 italic text-right">Separate keywords with commas</p>
                                 </div>

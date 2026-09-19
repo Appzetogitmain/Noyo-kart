@@ -221,7 +221,7 @@ export default function HeroCategoriesPerPage() {
           <div className="py-12 text-center text-slate-400 font-bold">Loading…</div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left">
+            <table className="w-full text-left min-w-[1000px]">
               <thead>
                 <tr className="border-b border-slate-100">
                   <th className="pb-3 text-[10px] font-black text-slate-400 uppercase tracking-widest">
@@ -378,30 +378,36 @@ export default function HeroCategoriesPerPage() {
                               placeholder="Subtitle (optional)"
                             />
                             <div className="flex items-center gap-3 pt-1">
-                              <label className="text-[11px] font-bold text-slate-500">Banner Type:</label>
-                              <div className="flex bg-slate-100 p-1 rounded-lg">
-                                <button
-                                  type="button"
-                                  onClick={() => updateBannerItem(idx, { linkType: 'none' })}
-                                  className={cn(
-                                    "px-3 py-1 rounded-md text-[10px] font-bold transition-all",
-                                    item.linkType !== 'sp' ? "bg-white text-slate-800 shadow-sm" : "text-slate-500 hover:text-slate-700"
-                                  )}
-                                >
-                                  QC Banner
-                                </button>
-                                <button
-                                  type="button"
-                                  onClick={() => updateBannerItem(idx, { linkType: 'sp' })}
-                                  className={cn(
-                                    "px-3 py-1 rounded-md text-[10px] font-bold transition-all",
-                                    item.linkType === 'sp' ? "bg-[#0284c7] text-white shadow-sm" : "text-slate-500 hover:text-slate-700"
-                                  )}
-                                >
-                                  SP Banner
-                                </button>
-                              </div>
+                              <label className="text-[11px] font-bold text-slate-500 shrink-0">Link Type:</label>
+                              <select
+                                value={item.linkType || "none"}
+                                onChange={(e) => updateBannerItem(idx, { linkType: e.target.value })}
+                                className="p-1.5 bg-slate-50 rounded-lg text-xs font-bold border-none outline-none"
+                              >
+                                <option value="none">No link</option>
+                                <option value="header">Header</option>
+                                <option value="category">Category</option>
+                                <option value="subcategory">Subcategory</option>
+                                <option value="product">Product</option>
+                                <option value="url">External URL</option>
+                                <option value="sp">Service Provider</option>
+                              </select>
                             </div>
+                            {item.linkType && item.linkType !== "none" && item.linkType !== "sp" && (
+                              <div>
+                                <input
+                                  value={item.linkValue || ""}
+                                  onChange={(e) => updateBannerItem(idx, { linkValue: e.target.value })}
+                                  className="w-full p-2 bg-slate-50 rounded-xl text-xs font-bold border-none outline-none mt-1"
+                                  placeholder={item.linkType === "url" ? "https://..." : "Enter Slug / ID"}
+                                />
+                                {item.linkType !== 'url' && (
+                                  <p className="text-[9px] text-slate-400 mt-1 pl-1">
+                                      Tip: Copy the ID from the <strong>{item.linkType === 'product' ? 'Products' : 'Categories'}</strong> page and paste it here.
+                                  </p>
+                                )}
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>
