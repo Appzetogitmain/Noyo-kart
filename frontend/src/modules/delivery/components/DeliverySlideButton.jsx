@@ -1,23 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { ChevronRight, Loader2 } from "lucide-react";
+import React, { useState } from "react";
+import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { deliveryApi } from "../services/deliveryApi";
 
 /**
- * DeliverySlideButton - A slide-to-confirm button for delivery actions
- * 
- * This component handles the slide gesture to trigger OTP generation.
- * It calls the generate-otp endpoint which uses the delivery person's stored location
- * from the database for proximity validation.
+ * DeliverySlideButton - A regular button that replaces the old slide-to-confirm button
  * 
  * @param {Object} props
  * @param {string} props.orderId - The order ID for OTP generation
  * @param {Function} props.onSuccess - Callback when OTP is successfully generated
  * @param {Function} props.onError - Callback when an error occurs
- * @param {string} props.label - Label text for the slide button (default: "SLIDE TO GENERATE OTP")
- * @param {string} props.bgColor - Background color class (default: "bg-brand-600")
- * @param {string} props.bgColorLight - Light background color class (default: "bg-brand-50")
+ * @param {string} props.label - Label text for the button (default: "GENERATE OTP")
+ * @param {string} props.bgColor - Background color class (default: "bg-indigo-600")
+ * @param {string} props.bgColorLight - Light background color class (unused but kept for compatibility)
  */
 const DeliverySlideButton = ({
   orderId,
@@ -25,31 +20,14 @@ const DeliverySlideButton = ({
   onError,
   isReturn = false,
   isReturnDrop = false,
-  label = "SLIDE TO GENERATE OTP",
+  label = "GENERATE OTP",
   bgColor = "bg-indigo-600",
   bgColorLight = "bg-indigo-50",
 }) => {
-  const [isSlideComplete, setIsSlideComplete] = useState(false);
-  const [dragX, setDragX] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Reset slide state when orderId changes
-  useEffect(() => {
-    setIsSlideComplete(false);
-    setDragX(0);
-    setIsLoading(false);
-  }, [orderId]);
-
-  const resetSlide = () => {
-    setIsSlideComplete(false);
-    setDragX(0);
-    setIsLoading(false);
-  };
-
-  /**
-   * Handle slide completion - generate OTP using stored location
-   */
-  const handleSlideComplete = async () => {
+  const handleClick = async () => {
+    if (isLoading) return;
     setIsLoading(true);
 
     try {
@@ -68,7 +46,6 @@ const DeliverySlideButton = ({
       }
     } catch (error) {
       // Handle different error types
-      // The backend returns { message, result: { error: { code, message, details } } }
       const resData = error.response?.data;
       const errorMessage = resData?.message || error.message || "Failed to generate OTP";
       const errorCode = resData?.result?.error?.code || resData?.result?.code;
@@ -99,70 +76,31 @@ const DeliverySlideButton = ({
       if (onError) {
         onError(error);
       }
-
-      resetSlide();
     } finally {
       setIsLoading(false);
     }
   };
 
+  // Adjust label string if it still contains "SLIDE TO"
+  const displayLabel = label.startsWith("SLIDE TO ") ? label.substring(9) : label;
+
   return (
-    <div className="relative h-16 bg-gray-100 rounded-full overflow-hidden select-none">
-      {/* Label text */}
-      <motion.div
-        className={`absolute inset-0 flex items-center justify-center text-gray-400 font-bold text-sm pointer-events-none transition-opacity duration-300 ${
-          dragX > 50 || isLoading ? "opacity-0" : "opacity-100"
-        }`}
-        animate={{ x: [0, 5, 0] }}
-        transition={{ repeat: Infinity, duration: 1.5 }}>
-        {label} <ChevronRight className="ml-1 inline" />
-      </motion.div>
-
-      {/* Loading indicator */}
-      {isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center">
-          <Loader2 className="animate-spin text-primary" size={24} />
-          <span className="ml-2 text-sm font-medium text-gray-600">
-            {isReturn ? "Requesting OTP..." : "Generating OTP..."}
-          </span>
-        </div>
+    <button
+      onClick={handleClick}
+      disabled={isLoading}
+      className={`w-full h-14 rounded-2xl flex items-center justify-center font-bold text-sm tracking-wide transition-all shadow-md active:scale-[0.98] ${
+        isLoading ? "bg-gray-400 cursor-not-allowed opacity-80" : bgColor
+      } text-white`}
+    >
+      {isLoading ? (
+        <>
+          <Loader2 className="animate-spin mr-2" size={20} />
+          {isReturn ? "Requesting OTP..." : "Generating OTP..."}
+        </>
+      ) : (
+        displayLabel
       )}
-
-      {/* Progress background */}
-      <motion.div
-        className={`absolute inset-y-0 left-0 ${bgColorLight} opacity-50`}
-        style={{ width: Math.min(dragX + 60, 340) }}
-      />
-
-      {/* Draggable button */}
-      <motion.div
-        className={`absolute top-1 bottom-1 left-1 w-14 rounded-full flex items-center justify-center shadow-md cursor-grab active:cursor-grabbing z-20 ${bgColor}`}
-        drag="x"
-        dragConstraints={{ left: 0, right: 280 }}
-        dragElastic={0.05}
-        dragMomentum={false}
-        onDrag={(_, info) => {
-          if (!isLoading) {
-            setDragX(Math.max(0, info.offset.x));
-          }
-        }}
-        onDragEnd={(_, info) => {
-          if (isLoading) return;
-
-          if (info.offset.x > 150) {
-            setIsSlideComplete(true);
-            handleSlideComplete();
-          } else {
-            setDragX(0);
-          }
-        }}
-        animate={{ x: isSlideComplete ? 280 : 0 }}
-        whileHover={{ scale: isLoading ? 1 : 1.05 }}
-        whileTap={{ scale: isLoading ? 1 : 0.95 }}
-        style={{ pointerEvents: isLoading ? "none" : "auto" }}>
-        <ChevronRight className="text-white" size={24} />
-      </motion.div>
-    </div>
+    </button>
   );
 };
 
