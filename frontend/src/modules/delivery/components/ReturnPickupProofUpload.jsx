@@ -112,7 +112,7 @@ const ReturnPickupProofUpload = ({ orderId, onSubmitted }) => {
         <CheckCircle className="w-12 h-12 text-green-600" />
         <p className="font-bold text-green-800 text-lg">Proof Uploaded!</p>
         <p className="text-sm text-green-700">
-          You can now slide to request the pickup OTP from the customer.
+          You can now request the pickup OTP from the customer.
         </p>
       </div>
     );
