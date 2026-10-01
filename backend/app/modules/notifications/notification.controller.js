@@ -425,12 +425,13 @@ export const broadcastNotification = async (req, res) => {
     }
 
     // Determine target users based on segment
-    // For simplicity, if segment === 'all', send to all ACTIVE customer tokens.
-    // If you have specific criteria for 'lapsed', 'power', 'new', apply them to find user IDs.
-    // Right now, let's fetch all customer tokens as a baseline, or customize per segment if needed.
-    
-    // As a generic implementation: fetch active tokens for customers
-    const tokensDoc = await PushToken.find({ isActive: true, role: "customer" }).select("token").lean();
+    const query = { isActive: true };
+    if (segment !== 'all') {
+        // If segment is not 'all', default to customer role (can be expanded later)
+        query.role = "customer";
+    }
+
+    const tokensDoc = await PushToken.find(query).select("token").lean();
     const tokens = tokensDoc.map(doc => doc.token);
 
     if (!tokens.length) {

@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 import axiosInstance from '@core/api/axios';
 import { getWithDedupe } from '@core/api/dedupe';
 import { getStoredAuthToken } from '@core/utils/authStorage';
@@ -15,9 +16,11 @@ const ROLE_STORAGE_KEYS = {
 const LEGACY_TOKEN_KEY = 'token';
 
 export const AuthProvider = ({ children }) => {
+    const location = useLocation();
+    
     // Current role based on URL
     const getCurrentRoleFromUrl = () => {
-        const path = window.location.pathname;
+        const path = location.pathname;
         if (path.startsWith('/seller')) return 'seller';
         if (path.startsWith('/admin')) return 'admin';
         if (path.startsWith('/delivery')) return 'delivery';

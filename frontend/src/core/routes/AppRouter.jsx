@@ -77,12 +77,16 @@ const CustomerLayoutWrapper = () => (
     </WishlistProvider>
 );
 
+import { AuthProvider } from '@core/context/AuthContext';
+
 const GlobalProvidersWrapper = () => (
-    <LocationProvider>
-        <ProductDetailProvider>
-            <Outlet />
-        </ProductDetailProvider>
-    </LocationProvider>
+    <AuthProvider>
+        <LocationProvider>
+            <ProductDetailProvider>
+                <Outlet />
+            </ProductDetailProvider>
+        </LocationProvider>
+    </AuthProvider>
 );
 
 const AppRouter = () => {

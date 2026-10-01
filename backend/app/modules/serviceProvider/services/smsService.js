@@ -22,24 +22,22 @@ export const sendSMS = async (phone, message) => {
     }
 
     const params = {
-      user: process.env.SMS_INDIA_HUB_USERNAME,
-      password: process.env.SMS_INDIA_HUB_API_KEY,
-      username: process.env.SMS_INDIA_HUB_USERNAME,
-      apikey: process.env.SMS_INDIA_HUB_API_KEY,
+      APIKey: process.env.SMS_INDIA_HUB_API_KEY,
       msisdn: phone,
       sid: process.env.SMS_INDIA_HUB_SENDER_ID,
       msg: message,
-      fl: 0,
-      gwid: 2,
+      fl: "0",
+      gwid: process.env.SMS_INDIA_HUB_GWID || "2",
     };
 
     if (process.env.SMS_INDIA_HUB_DLT_TEMPLATE_ID) {
-      params.TemplateId = process.env.SMS_INDIA_HUB_DLT_TEMPLATE_ID;
+      params.DLT_TE_ID = process.env.SMS_INDIA_HUB_DLT_TEMPLATE_ID;
+      params.TE_ID = process.env.SMS_INDIA_HUB_DLT_TEMPLATE_ID;
     }
 
-    const baseUrl = process.env.SMS_BASE_URL || 'https://cloud.smsindiahub.in/vendorsms/pushsms.aspx';
-    console.log('[SMS] Sending request to (HTTPS):', baseUrl);
-    console.log('[SMS] Params (masked):', { ...params, password: '***', apikey: '***' });
+    const baseUrl = process.env.SMS_BASE_URL || 'http://cloud.smsindiahub.in/vendorsms/pushsms.aspx';
+    console.log('[SMS] Sending request to:', baseUrl);
+    console.log('[SMS] Params (masked):', { ...params, APIKey: '***' });
 
     const response = await axios.get(baseUrl, { params });
 
@@ -66,7 +64,7 @@ export const sendSMS = async (phone, message) => {
     } else {
       console.error(`[SMS] ❌ SMS Provider Error:`, JSON.stringify(response.data));
       if (typeof data === 'string' && data.includes('Invalid Login')) {
-        console.error('[SMS] ⚠️  Authentication failed - check SMS_INDIA_HUB_USERNAME and SMS_INDIA_HUB_API_KEY');
+        console.error('[SMS] ⚠️  Authentication failed - check SMS_INDIA_HUB_API_KEY and SMS_INDIA_HUB_SENDER_ID');
       }
       return { success: false, error: response.data };
     }
